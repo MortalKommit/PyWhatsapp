@@ -1,23 +1,21 @@
 # PyWhatsapp
-[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://github.com/shauryauppal/PyWhatsapp)  [![License](https://img.shields.io/github/license/shauryauppal/PyWhatsapp.svg)](https://github.com/shauryauppal/PyWhatsapp/blob/master/LICENSE) [![GitHub stars](https://img.shields.io/github/stars/shauryauppal/PyWhatsapp.svg)](https://github.com/shauryauppal/PyWhatsapp/stargazers)  [![HitCount](http://hits.dwyl.io/shauryauppal/PyWhatsapp.svg)](http://hits.dwyl.io/shauryauppal/PyWhatsapp)
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://github.com/shauryauppal/PyWhatsapp)  [![License](https://img.shields.io/github/license/shauryauppal/PyWhatsapp.svg)](https://github.com/shauryauppal/PyWhatsapp/blob/master/LICENSE)
 
-## Python Automation using Selenium &amp; Scheduling of messages and media
+## Whatsapp Automation using Selenium &amp; Python, with scheduling of messages and media
 
-## Objective:
-Pywhatsapp is used to Automate Whatsapp through Whatsapp web. We can
-add number of contacts whom we want to send messages or Media
-attachments ( like Video or Images). Selenium, Autoit and Schedule have
-been used one from Automation and other for Scheduling messages.
-
----
-
-## Use Case:
-We can schedule Good Morning or Good night messages with a nice Picture
-at a particular time to our loved ones. We can set reminders. Suppose at
-12 o'clock you want to wish your friend happy birthday so schedule your
-messages and sleep peacefully.
+Pywhatsapp can be used for automatically sending messages through the social media app Whatsapp via
+the Whatsapp Web interface. Contacts may be added at runtime, or be chosen from a contact list associated
+with your account.
+Messages may contain media attachments (Video or Images). Selenium serves as the interface to send messages
+and AutoIt and Schedule for Schedule-based messaging.
 
 ---
+
+## Planned features
+1. Automated responses to greetings, placeholder messages and better
+scheduling functionality
+2. Command-line interface/arguments and following that a basic GUI
+
 
 ## Installation
 
@@ -38,6 +36,9 @@ OR
 ChromeDriver used: If this versions becomes outdated or gives problem
 download the latest version from <a href =
 "http://chromedriver.chromium.org/downloads"> Download Link </a>
+
+Requires chromedriver location added to the %PATH% system environment variable.
+
 
 ### Platform Mac
 Remove the ChromeDriverused in the repository and install <a href =
