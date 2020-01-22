@@ -1,4 +1,5 @@
 import schedule
+import argparse
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
@@ -16,57 +17,48 @@ import datetime
 import os
 
 browser = None
-Contact = None
+contact = []
 message = None
 Link = "https://web.whatsapp.com/"
 wait = None
 choice = None
 docChoice = None
 doc_filename = None
-unsaved_Contacts = None
+unsaved_contacts = []
 
 
+def is_numeric(literal):
+    """Return whether a literal can be parsed as a numeric value"""
+    castings = [int, float, complex,
+                lambda s: int(s, 2),  # binary
+                lambda s: int(s, 8),  # octal
+                lambda s: int(s, 16)]  # hex
+    for cast in castings:
+        try:
+            cast(literal)
+            return True
+        except ValueError:
+            pass
+    return False
+
+
+'''
+For legacy documentation purpose 
 def input_contacts():
-    global Contact, unsaved_Contacts
+ 
+   global contact, unsaved_contacts
     # List of Contacts
-    Contact = []
-    unsaved_Contacts = []
-    while True:
-        # Enter your choice 1 or 2
-        print("PLEASE CHOOSE ONE OF THE OPTIONS:\n")
-        print("1.Message to Saved Contact number")
-        print("2.Message to Unsaved Contact number\n")
-        x = int(input("Enter your choice(1 or 2):\n"))
-        print()
-        if x == 1:
-            n = int(input('Enter number of Contacts to add(count)->'))
-            print()
-            for i in range(0, n):
-                inp = str(input("Enter contact name(text)->"))
-                inp = '"' + inp + '"'
-                # print (inp)
-                Contact.append(inp)
-        elif x == 2:
-            n = int(input('Enter number of unsaved Contacts to add(count)->'))
-            print()
+
+    contact = []
+    unsaved_contacts = []
+
             for i in range(0, n):
                 # Example use: 919899123456, Don't use: +919899123456
                 # Reference : https://faq.whatsapp.com/en/android/26000030/
                 inp = str(input("Enter unsaved contact number with country code(interger):\n\n"
                                 "Valid input: 91943xxxxx12\nInvalid input: +91943xxxxx12\n\n"))
-                # print (inp)
-                unsaved_Contacts.append(inp)
-
-        choi = input("Do you want to add more contacts(y/n)->")
-        if choi == "n":
-            break
-
-    if len(Contact) != 0:
-        print("\nSaved contacts entered list->", Contact)
-    if len(unsaved_Contacts) != 0:
-        print("Unsaved numbers entered list->", unsaved_Contacts)
-    input("\nPress ENTER to continue...")
-
+         
+    
 
 def input_message():
     global message
@@ -87,6 +79,7 @@ def input_message():
     message = "\n".join(message)
     print()
     print(message)
+'''
 
 
 def whatsapp_login():
@@ -117,7 +110,7 @@ def send_message(target):
         print("Input box:", input_box)
         for ch in message:
             if ch == "\n":
-                ActionChains(browser).key_down(Keys.SHIFT).key_down(Keys.ENTER).key_up(Keys.ENTER).key_up(Keys.SHIFT).\
+                ActionChains(browser).key_down(Keys.SHIFT).key_down(Keys.ENTER).key_up(Keys.ENTER).key_up(Keys.SHIFT). \
                     key_up(Keys.BACKSPACE).perform()
             else:
                 input_box.send_keys(ch)
@@ -135,7 +128,7 @@ def send_unsaved_contact_message():
         input_box = browser.find_element_by_xpath('//*[@id="main"]/footer/div[1]/div[2]/div/div[2]')
         for ch in message:
             if ch == "\n":
-                ActionChains(browser).key_down(Keys.SHIFT).key_down(Keys.ENTER).key_up(Keys.ENTER).key_up(Keys.SHIFT).\
+                ActionChains(browser).key_down(Keys.SHIFT).key_down(Keys.ENTER).key_up(Keys.ENTER).key_up(Keys.SHIFT). \
                     key_up(Keys.BACKSPACE).perform()
             else:
                 input_box.send_keys(ch)
@@ -179,6 +172,7 @@ def send_attachment():
                                                          'div[2]/span[2]/div/div/span')
     whatsapp_send_button.click()
 
+
 # Function to send Documents(PDF, Word file, PPT, etc.)
 
 
@@ -207,8 +201,8 @@ def send_files():
 
 
 def sender():
-    global Contact, choice, docChoice, unsaved_Contacts
-    for i in Contact:
+    global contact, choice, docChoice, unsaved_contacts
+    for i in contact:
         send_message(i)
         print("Message sent to ", i)
         if choice == "yes":
@@ -222,8 +216,8 @@ def sender():
             except:
                 print('Files not sent')
     time.sleep(5)
-    if len(unsaved_Contacts) > 0:
-        for i in unsaved_Contacts:
+    if len(unsaved_contacts) > 0:
+        for i in unsaved_contacts:
             link = "https://wa.me/" + i
             # driver  = webdriver.Chrome()
             browser.get(link)
@@ -270,13 +264,22 @@ if __name__ == "__main__":
     print("Web Page Open")
 
     # Append more contact as input to send messages
-    input_contacts()
-    # Enter the message you want to send
-    input_message()
+    # input_contacts()
 
-    # If you want to schedule messages for
-    # a particular timing choose yes
-    # If no choosed instant message would be sent
+    messageparser = argparse.ArgumentParser(description='Automated Whatsapp Messaging')
+    messageparser.add_argument('contacts', metavar='Numbers', nargs='+',
+                               help='A list of contacts (names or numbers, max:10, country code required as +XX)')
+    messageparser.add_argument("--msg", metavar='MESSAGE', nargs='+', help="The message to be sent to a list of "
+                                                                           "contacts or groups. Use \\n for newline")
+    args = messageparser.parse_args()
+
+    contact = ['"{0}"'.format(element) for element in args.contacts if not is_numeric(element)]
+    unsaved_contacts = [element for element in args.contacts if not is_numeric(element)]
+    message = args.msg
+
+    # For scheduled messages
+    # Yes, sent via schedule
+    # If not, a message is sent instantly
     isSchedule = input('Do you want to schedule your Message(yes/no):')
     if isSchedule == "yes":
         job_time = input('input time in 24 hour (HH:MM) format - ')
@@ -289,7 +292,7 @@ if __name__ == "__main__":
         # Note the document file should be present in the Document Folder
         doc_filename = input("Enter the Document file name you want to send: ")
 
-    # Let us login and Scan
+    # Login and Scan
     print("SCAN YOUR QR CODE FOR WHATSAPP WEB")
     whatsapp_login()
 
@@ -307,10 +310,5 @@ if __name__ == "__main__":
     # First time message sending Task Complete
     print("Task Completed")
 
-    # Messages are scheduled to send
-    # Default schedule to send attachment and greet the personal
-    # For GoodMorning, GoodNight and howareyou wishes
-    # Comment in case you don't want to send wishes or schedule
     scheduler()
-
     browser.quit()
