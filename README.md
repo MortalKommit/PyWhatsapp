@@ -156,8 +156,9 @@ License
 Licensed as GPL-2, open source software.(see <a
 href="https://github.com/shauryauppal/PyWhatsapp/blob/master/LICENSE">LICENSE</a>).
 
-Usage of this program is bound by the terms and conditions specified in the Whatsapp 
-Terms of Service (see <a href="https://www.whatsapp.com/legal/"</a>).  
+Usage of this program is bound by the terms and conditions specified in the 
+(<a href="https://www.whatsapp.com/legal/">Whatsapp 
+Terms of Service</a>).  
 You should not violate any clauses or restrictions specified in the terms above.  
 The author of this program is not liable for any damage, claim or action to your whatsapp account
 by the use of this program.  
