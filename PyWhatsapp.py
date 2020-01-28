@@ -104,7 +104,7 @@ def send_unsaved_contact_message(message_content, web_browser, link):
     time.sleep(1)
     web_browser.find_element_by_xpath('//*[@id="action-button"]').click()
     time.sleep(2)
-    web_browser.find_element_by_xpath('//*[@id="content"]/div/div/div/a').click()
+    web_browser.find_element_by_xpath('//*[@id="fallback_block"]/div/div/a').click()
     time.sleep(4)
 
     try:
@@ -112,8 +112,8 @@ def send_unsaved_contact_message(message_content, web_browser, link):
         input_box = web_browser.find_element_by_xpath('//*[@id="main"]/footer/div[1]/div[2]/div/div[2]')
         for ch in message_content.message:
             if ch == "\n":
-                ActionChains(web_browser).key_down(Keys.SHIFT).key_down(Keys.ENTER).key_up(Keys.ENTER).\
-                    key_up(Keys.SHIFT). key_up(Keys.BACKSPACE).perform()
+                ActionChains(web_browser).key_down(Keys.SHIFT).key_down(Keys.ENTER).key_up(Keys.ENTER). \
+                    key_up(Keys.SHIFT).key_up(Keys.BACKSPACE).perform()
             else:
                 input_box.send_keys(ch)
         input_box.send_keys(Keys.ENTER)
@@ -124,6 +124,7 @@ def send_unsaved_contact_message(message_content, web_browser, link):
         return
 
     time.sleep(7)
+
 
 # Function to send Documents(PDF, Word file, PPT, etc.)
 
@@ -196,7 +197,15 @@ args.msg = args.msg.replace("\\n", '\n')
 
 Tk().withdraw()
 if args.attach:
-    names = filedialog.askopenfilenames(title='Send Whatsapp Attachment(s)', filetypes=[("All files", "*.*")],
+    names = filedialog.askopenfilenames(title='Send Whatsapp Attachment(s)',
+                                        filetypes=[("All Supported Types",
+                                                    "*.jpe *.jpg *.jpeg *.gif *.png *.bmp *.ico *"
+                                                    ".svg *.svgz *.tif *.tiff *.ai *.drw *.pct "
+                                                    "*.psp *.xcf *.psd *.raw "
+                                                    "*.mp4 *.3gp *.mov"), ("All files", "*.*"),
+                                                    ("Image Files","*.jpe *.jpg *.jpeg *.gif *.png *.bmp *.ico *.svg "
+                                                                   "*.svgz *.tif *.tiff *.ai *.drw *.pct *.psp *.xcf "
+                                                                   "*.psd *.raw")],
                                         initialdir=os.path.expanduser('~'), multiple=True)
 else:
     names = None
@@ -213,4 +222,4 @@ sender(contact, unsaved_contacts, message_object, browser)
 # First time message sending Task Complete
 print("Task Completed")
 
-#browser.quit()
+# browser.quit()

@@ -1,6 +1,7 @@
 # PyWhatsapp
-[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://github.com/shauryauppal/PyWhatsapp)  [![License](https://img.shields.io/github/license/shauryauppal/PyWhatsapp.svg)](https://github.com/shauryauppal/PyWhatsapp/blob/master/LICENSE)
-
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://github.com/MortalKommit/PyWhatsapp)
+[![License](https://img.shields.io/github/license/MortalKommit/PyWhatsapp.svg)](https://github.com/MortalKommit/PyWhatsapp/blob/master/LICENSE)
+ [![HitCount](http://hits.dwyl.io/{MortalKommit}/{PyWhatsapp}.svg)](http://hits.dwyl.io/{MortalKommit}/{PyWhatsapp})
 ## Automated Whatsapp messaging using Selenium &amp; Python
 
 Pywhatsapp uses command-line arguments to send message(s) to one or more contacts. Messages may be sent following a schedule,  
@@ -153,8 +154,8 @@ src="https://raw.githubusercontent.com/shauryauppal/PyWhatsapp/master/Media/Demo
 ---
 ## License
 License
-Licensed as GPL-2, open source software.(see <a
-href="https://github.com/shauryauppal/PyWhatsapp/blob/master/LICENSE">LICENSE</a>).
+Licensed as Apache 2.0, open source software.(see <a
+href="https://github.com/MortalKommit/PyWhatsapp/blob/master/LICENSE">LICENSE</a>).
 
 Usage of this program is bound by the terms and conditions specified in the 
 (<a href="https://www.whatsapp.com/legal/">Whatsapp 
